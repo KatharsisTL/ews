@@ -4,6 +4,7 @@ package ews
 import (
 	"bytes"
 	"net/http"
+	"github.com/Azure/go-ntlmssp"
 )
 
 // https://msdn.microsoft.com/en-us/library/office/dd877045(v=exchg.140).aspx
@@ -28,7 +29,15 @@ func Issue(ewsAddr string, username string, password string, body []byte) (*http
 	}
 	req.SetBasicAuth(username, password)
 	req.Header.Set("Content-Type", "text/xml")
-	client := new(http.Client)
+	
+	tr := ntlmssp.Negotiator{
+		RoundTripper:&http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
+		},
+	}
+	
+	client := &http.Client{Transport: tr}
+	//client := new(http.Client)
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error { return http.ErrUseLastResponse }
 	return client.Do(req)
 }
