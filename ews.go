@@ -4,6 +4,7 @@ package ews
 import (
 	"bytes"
 	"net/http"
+	"crypto/tls"
 	"github.com/Azure/go-ntlmssp"
 )
 
