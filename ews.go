@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"crypto/tls"
 	"github.com/Azure/go-ntlmssp"
+	"log"
 )
 
 // https://msdn.microsoft.com/en-us/library/office/dd877045(v=exchg.140).aspx
@@ -24,6 +25,7 @@ func Issue(ewsAddr string, username string, password string, body []byte) (*http
 	b2 := []byte(soapheader)
 	b2 = append(b2, body...)
 	b2 = append(b2, "\n  </soap:Body>\n</soap:Envelope>"...)
+	log.Println(string(b2))
 	req, err := http.NewRequest("POST", ewsAddr, bytes.NewReader(b2))
 	if err != nil {
 		return nil, err
