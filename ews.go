@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"crypto/tls"
 	"github.com/Azure/go-ntlmssp"
-	"log"
 )
 
 // https://msdn.microsoft.com/en-us/library/office/dd877045(v=exchg.140).aspx
